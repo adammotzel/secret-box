@@ -15,6 +15,8 @@ The project was developed using Python `3.12.8` with the following dependencies:
 - `cryptography`: Provides cryptographic recipes and primitives for Python.
 - `argon2-cffi`: Provides Argon2 password hashing via CFFI.
 
+I used Python's `tkinter` package to create a primitive GUI for simplicity.
+
 
 ## Security Features
 

@@ -7,9 +7,7 @@
 
 ## Overview
 
-The Secret Box is a locally controlled, offline password manager written in Python. I created it to learn more about modern encryption techniques and storage security.
-
-The project name was inspired by Patrick Star and his impenetrable [secret box](https://www.youtube.com/watch?v=n4BbMWKzYUI).
+The Secret Box is a locally controlled, offline password manager written in Python. I created it to learn more about modern encryption techniques and storage security. The project name was inspired by Patrick Star and his impenetrable [secret box](https://www.youtube.com/watch?v=n4BbMWKzYUI).
 
 The project was developed using Python `3.12.8` with the following dependencies:
 - `cryptography`: Provides cryptographic recipes and primitives for Python.

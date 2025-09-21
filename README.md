@@ -55,9 +55,18 @@ This creates a `bin` directory in project root with the app's executable, `sbox.
 NOTE: The `build` script only supports Windows OS. Modify it as needed for macOS or Linux.
 
 
+## Testing
+
+Only functions from `sbox.core` have automated tests. The GUI was only tested manually, because graphical interface testing is a bit more complex and this project was just a learning exercise.
+
+Execute tests for `sbox.core`:
+1. Install the `pytest` package.
+2. Execute `pytest tests --verbose`.
+
+
 ## Disclaimer
 
-This project is simply a learning exercise; it is not intended for production use. Use it at your own risk.
+This project is simply a personal learning exercise; it is not intended for production use. Use it at your own risk.
 
 Other important notes:
 

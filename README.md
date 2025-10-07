@@ -1,5 +1,3 @@
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
 # The Secret Box
 
 <img src="img/the-secret-box.png" alt="the-secret-box" width="500"/>
@@ -9,11 +7,11 @@
 
 The Secret Box is a locally controlled, offline password manager written in Python. I created it to learn more about modern encryption techniques and storage security. The project name was inspired by Patrick Star and his impenetrable [secret box](https://www.youtube.com/watch?v=n4BbMWKzYUI).
 
-The project was developed using Python `3.12.8` with the following dependencies:
+The project was developed using Python `3.12.8` with the following external dependencies:
 - `cryptography`: Provides cryptographic recipes and primitives for Python.
 - `argon2-cffi`: Provides Argon2 password hashing via CFFI.
 
-I used Python's `tkinter` package to create a primitive GUI for simplicity.
+I also used Python's `tkinter` package to create a basic GUI.
 
 
 ## Security Features
@@ -34,9 +32,11 @@ I used Python's `tkinter` package to create a primitive GUI for simplicity.
 
 ## Usage
 
+Clone the repo and install the requirements listed in `requirements.txt`.
+
 ### Option 1: Run with Python
 
-Clone the repo, then run the app locally:
+Run the app locally:
 
 ```bash
 python -m sbox.run
@@ -57,7 +57,7 @@ NOTE: The `build` script only supports Windows OS. Modify it as needed for macOS
 
 ## Testing
 
-Only functions from `sbox.core` have automated tests. The GUI was only tested manually, because graphical interface testing is a bit more complex and this project was just a learning exercise.
+Only functions from `sbox.core` have automated tests. The GUI was only tested manually because graphical interface testing is a bit more complex and this project was just a learning exercise.
 
 Execute tests for `sbox.core`:
 1. Install the `pytest` package.

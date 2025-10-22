@@ -269,6 +269,8 @@ class TheSecretBox:
                 site = context_entry.get().strip()
                 pwd = password_entry.get().strip()
                 if site:
+                    if site in data:
+                        site += "_copy"  # handle duplicate keys
                     data[site] = pwd
 
             encrypt_data(data, password)

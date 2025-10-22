@@ -7,7 +7,7 @@
 
 The Secret Box is a locally controlled, offline password manager written in Python. I created it to learn more about modern encryption techniques and storage security. The project name was inspired by Patrick Star and his impenetrable [secret box](https://www.youtube.com/watch?v=n4BbMWKzYUI).
 
-The project was developed using Python `3.12.8` with the following external dependencies:
+This was developed using Python `3.12.8` with the following external dependencies:
 - `cryptography`: Provides cryptographic recipes and primitives for Python.
 - `argon2-cffi`: Provides Argon2 password hashing via CFFI.
 
@@ -50,7 +50,7 @@ Run the build script:
 source scripts/build.sh
 ```
 
-This creates a `bin` directory in project root with the app's executable, `sbox.exe`. You can run the executable directly or add it to your system/user `PATH` to launch via terminal (by invoking the `sbox` command).
+This creates a `bin` directory in project root with the app's executable, `sbox.exe`. You can run the executable directly or add it to your system/user `PATH` to launch via terminal by invoking the `sbox` command.
 
 NOTE: The `build` script only supports Windows OS. Modify it as needed for macOS or Linux.
 

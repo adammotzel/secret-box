@@ -11,12 +11,12 @@ from sbox.core import (
     encrypt_data,
     decrypt_data,
     secure_delete,
-    KEY_SIZE
+    KEY_SIZE,
 )
 
 
 def test_derive_key_is_consistent():
-    password = "password"
+    password = "password"  # noqa: S105
     salt = b"1234567890abcdef"
     key1 = derive_key(password, salt)
     key2 = derive_key(password, salt)
@@ -25,7 +25,7 @@ def test_derive_key_is_consistent():
 
 
 def test_encrypt_and_decrypt_data():
-    password = "secretpassword"
+    password = "secretpassword"  # noqa: S105
     data = {"github": "ghp_testtoken", "email": "user@example.com"}
 
     with tempfile.TemporaryDirectory() as temp_dir:

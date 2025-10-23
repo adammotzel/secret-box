@@ -25,7 +25,7 @@ from sbox.config import (
     TIME_COST,
     MEMORY_COST,
     PARALLELISM,
-    ENCRYPTED_FILE
+    ENCRYPTED_FILE,
 )
 
 
@@ -53,7 +53,7 @@ def derive_key(password: str, salt: bytes) -> bytes:
         memory_cost=MEMORY_COST,
         parallelism=PARALLELISM,
         hash_len=KEY_SIZE,
-        type=Type.ID
+        type=Type.ID,
     )
 
     return key
@@ -74,7 +74,7 @@ def encrypt_data(data: dict, password: str):
     -------
     None
     """
-    
+
     plaintext = json.dumps(data, indent=2).encode("utf-8")
 
     # Generate salt and IV
@@ -92,18 +92,15 @@ def encrypt_data(data: dict, password: str):
     encrypted_blob = {
         "salt": salt.hex(),
         "iv": iv.hex(),
-        "ciphertext": ciphertext.hex()
+        "ciphertext": ciphertext.hex(),
     }
 
     # create temp file in the same directory as ENCRYPTED_FILE
     temp_dir = os.path.dirname(ENCRYPTED_FILE)
     with tempfile.NamedTemporaryFile(
-        "w", 
-        encoding="utf-8", 
-        dir=temp_dir, 
-        delete=False
+        "w", encoding="utf-8", dir=temp_dir, delete=False
     ) as tmp_file:
-        
+
         # serialize as json for writing
         json.dump(encrypted_blob, tmp_file)
         # flush Python internal buffers
@@ -172,12 +169,12 @@ def secure_delete(path):
 
         1. Overwrite file contents
         2. Delete file
-    
+
     path : str
         Path to the file.
     """
     if os.path.exists(path):
-        with open(path, 'ba+', buffering=0) as f:
+        with open(path, "ba+", buffering=0) as f:
             length = f.tell()
             f.seek(0)
             f.write(os.urandom(length))

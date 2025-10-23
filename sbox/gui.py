@@ -43,24 +43,42 @@ class TheSecretBox:
         """
         self.clear_root()
 
-        tk.Label(self.root, text="Enter your master password:").pack(pady=(60, 10))
+        tk.Label(self.root, text="Enter your master password:").pack(
+            pady=(60, 10)
+        )
         self.password_entry = tk.Entry(self.root, show="*", width=40)
         self.password_entry.pack()
         self.password_entry.focus_set()
 
-        tk.Label(self.root, text="Press Enter or click 'Unlock Secret Box'", fg="gray").pack(pady=(5, 15))
+        tk.Label(
+            self.root,
+            text="Press Enter or click 'Unlock Secret Box'",
+            fg="gray",
+        ).pack(pady=(5, 15))
 
         # bind 'Enter' key to the unlock handler
         self.password_entry.bind("<Return>", lambda event: self.handle_unlock())
 
-        tk.Button(self.root, text="Unlock Secret Box", command=self.handle_unlock).pack(pady=20)
+        tk.Button(
+            self.root, text="Unlock Secret Box", command=self.handle_unlock
+        ).pack(pady=20)
 
         # spacer for visual clarity
         tk.Label(self.root, text="").pack(expand=True)
 
-        tk.Button(self.root, text="Create New Secret Box", fg="green", command=self.create_sbox).pack(pady=1)
+        tk.Button(
+            self.root,
+            text="Create New Secret Box",
+            fg="green",
+            command=self.create_sbox,
+        ).pack(pady=1)
 
-        tk.Button(self.root, text="Delete Secret Box", fg="red", command=self.handle_delete_vault).pack(pady=(10, 15))
+        tk.Button(
+            self.root,
+            text="Delete Secret Box",
+            fg="red",
+            command=self.handle_delete_vault,
+        ).pack(pady=(10, 15))
 
     def create_sbox(self):
         """
@@ -69,25 +87,25 @@ class TheSecretBox:
         """
         if os.path.exists(ENCRYPTED_FILE):
             messagebox.showerror(
-                "Error", 
-                "A Secret Box already exists. Please delete it if you want to create a new one."
+                "Error",
+                "A Secret Box already exists. Please delete it if you want to create a new one.",
             )
             return
 
         pw = simpledialog.askstring(
-            "Create Secret Box", 
+            "Create Secret Box",
             "Please enter the master password for your Secret Box:",
-            show="*"
+            show="*",
         )
 
         if not pw:
             messagebox.showerror("Error", "Please enter a valid password.")
             return
-        
+
         pw2 = simpledialog.askstring(
-            "Create Secret Box", 
+            "Create Secret Box",
             "Please re-enter the master password:",
-            show="*"
+            show="*",
         )
 
         if pw != pw2:
@@ -95,14 +113,16 @@ class TheSecretBox:
             del pw
             del pw2
             return
-        
+
         del pw2
 
         # encrypt empty password dictionary using the entered password
         encrypt_data({}, pw)
         del pw
 
-        messagebox.showinfo("Secret Box Created", "New Secret Box created successfully.")
+        messagebox.showinfo(
+            "Secret Box Created", "New Secret Box created successfully."
+        )
         self.build_vault_editor({})
 
     def handle_unlock(self):
@@ -122,7 +142,8 @@ class TheSecretBox:
         # handle non-existent vaults
         if not os.path.exists(ENCRYPTED_FILE):
             messagebox.showerror(
-                "Error", "No Secret Box found. Please create a new one using the 'Create New Secret Box' button."
+                "Error",
+                "No Secret Box found. Please create a new one using the 'Create New Secret Box' button.",
             )
             del password
             self.password_entry.focus_set()
@@ -130,11 +151,14 @@ class TheSecretBox:
 
         try:
             data = decrypt_data(password)
-            del password
             self.build_vault_editor(data)
-        except Exception:
             del password
-            messagebox.showerror("Failed to Decrypt", "The password is incorrect, or the file is corrupted.")
+        except Exception:
+            del password  # noqa: F821
+            messagebox.showerror(
+                "Failed to Decrypt",
+                "The password is incorrect, or the file is corrupted.",
+            )
             self.password_entry.focus_set()
             return
 
@@ -154,10 +178,20 @@ class TheSecretBox:
         self.rows_frame = tk.Frame(self.root)
         self.rows_frame.pack(pady=10)
 
-        tk.Label(self.rows_frame, text="Context", width=25, anchor="center",
-                font=("Arial", 10, "bold")).grid(row=0, column=0, padx=5, pady=2)
-        tk.Label(self.rows_frame, text="Password", width=25, anchor="center",
-                font=("Arial", 10, "bold")).grid(row=0, column=1, padx=5, pady=2)
+        tk.Label(
+            self.rows_frame,
+            text="Context",
+            width=25,
+            anchor="center",
+            font=("Arial", 10, "bold"),
+        ).grid(row=0, column=0, padx=5, pady=2)
+        tk.Label(
+            self.rows_frame,
+            text="Password",
+            width=25,
+            anchor="center",
+            font=("Arial", 10, "bold"),
+        ).grid(row=0, column=1, padx=5, pady=2)
 
         self.entry_rows = []
         self.current_row = 1
@@ -165,13 +199,19 @@ class TheSecretBox:
         for site, password in data.items():
             self.add_row(site, password)
 
-        tk.Button(self.root, text="+ Add Password", command=self.add_row).pack(pady=10)
+        tk.Button(self.root, text="+ Add Password", command=self.add_row).pack(
+            pady=10
+        )
 
         btn_frame = tk.Frame(self.root)
         btn_frame.pack(pady=10)
 
-        tk.Button(btn_frame, text="Save and Encrypt", command=self.handle_save).pack(side=tk.LEFT, padx=10)
-        tk.Button(btn_frame, text="Exit Secret Box", command=self.root.quit).pack(side=tk.LEFT, padx=10)
+        tk.Button(
+            btn_frame, text="Save and Encrypt", command=self.handle_save
+        ).pack(side=tk.LEFT, padx=10)
+        tk.Button(
+            btn_frame, text="Exit Secret Box", command=self.root.quit
+        ).pack(side=tk.LEFT, padx=10)
 
     def handle_delete_vault(self):
         """
@@ -179,15 +219,15 @@ class TheSecretBox:
         """
         if not os.path.exists(ENCRYPTED_FILE):
             messagebox.showinfo(
-                "Secret Box Not Found", 
-                "There is no existing Secret Box to delete."
+                "Secret Box Not Found",
+                "There is no existing Secret Box to delete.",
             )
             return
 
         confirm = messagebox.askyesno(
             "Warning",
             "Deleting your Secret Box is permanent and cannot be undone.\n\n"
-            "Are you sure you want to proceed?"
+            "Are you sure you want to proceed?",
         )
 
         if not confirm:
@@ -196,24 +236,26 @@ class TheSecretBox:
         user_input = simpledialog.askstring(
             "Removal Confirmation",
             "To permanently delete the Secret Box, type:\n\n"
-            f"'{CONFIRM_PHRASE}'"
+            f"'{CONFIRM_PHRASE}'",
         )
 
         if user_input != CONFIRM_PHRASE:
             messagebox.showwarning(
-                "Not Confirmed", 
-                "Secret Box was not deleted. Confirmation phrase was incorrect."
+                "Not Confirmed",
+                "Secret Box was not deleted. Confirmation phrase was incorrect.",
             )
             return
 
         try:
             secure_delete(path=ENCRYPTED_FILE)
             messagebox.showinfo(
-                "Secret Box Deleted", 
-                "Your Secret Box has been permanently deleted."
+                "Secret Box Deleted",
+                "Your Secret Box has been permanently deleted.",
             )
         except Exception as e:
-            messagebox.showerror("Error", f"Failed to delete the Secret Box.\n{e}")
+            messagebox.showerror(
+                "Error", f"Failed to delete the Secret Box.\n{e}"
+            )
 
     def add_row(self, context: str = "", password: str = ""):
         """
@@ -222,7 +264,7 @@ class TheSecretBox:
         Parameters
         ----------
         context : str, optional
-            The context or label for the password (e.g., site name). Default is an empty 
+            The context or label for the password (e.g., site name). Default is an empty
             string.
         password : str, optional
             The actual password associated with the context. Default is an empty string.
@@ -244,7 +286,9 @@ class TheSecretBox:
             remove_btn.destroy()
             self.entry_rows.remove((context_entry, password_entry))
 
-        remove_btn = tk.Button(self.rows_frame, text="Delete", command=remove_row)
+        remove_btn = tk.Button(
+            self.rows_frame, text="Delete", command=remove_row
+        )
         remove_btn.grid(row=row_index, column=2, padx=5)
 
         self.entry_rows.append((context_entry, password_entry))
@@ -255,9 +299,9 @@ class TheSecretBox:
         Encrypt and save all password entries using the master password.
         """
         password = simpledialog.askstring(
-            "Password Required", 
-            "Re-enter your master password to encrypt the Secret Box:", 
-            show="*"
+            "Password Required",
+            "Re-enter your master password to encrypt the Secret Box:",
+            show="*",
         )
         if not password:
             messagebox.showerror("Error", "Password is required to encrypt.")
@@ -279,8 +323,8 @@ class TheSecretBox:
             del data
 
             messagebox.showinfo(
-                "Success", 
-                "Secret Box encrypted and saved.\nYou may now safely exit the app."
+                "Success",
+                "Secret Box encrypted and saved.\nYou may now safely exit the app.",
             )
         except Exception as e:
             messagebox.showerror("Error", f"Encryption failed.\n{e}")

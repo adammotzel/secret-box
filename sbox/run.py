@@ -12,7 +12,7 @@ from sbox.gui import TheSecretBox
 
 def get_icon_path():
     """Utility to get the icon path."""
-    
+
     if getattr(sys, "frozen", False):
         base_path = sys._MEIPASS
     else:

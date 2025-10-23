@@ -1,0 +1,7 @@
+[tool.black]
+line-length = 80
+
+[tool.ruff]
+select = ["E", "F", "S"]
+ignore = ["E501", "S101"]
+fix = true
